@@ -2,10 +2,23 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import ReduxTest from './ReduTest';
+import StyledTest from './StyledTest';
+
+
 function App() {
+
+
+
   return (
+    <Provider store={store}>
+      
     <div className="App">
       <header className="App-header">
+        <StyledTest/>
+        <ReduxTest/>
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
@@ -20,7 +33,12 @@ function App() {
         </a>
       </header>
     </div>
+
+    </Provider>
   );
 }
 
 export default App;
+
+
+
