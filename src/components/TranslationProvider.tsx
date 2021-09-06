@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { TranslationContext } from "../contexts/TranslationContext";
-import { LANGS, TranslationConfigInterface } from "../types/TranslationTypes";
+import { LANGS } from "../types/TranslationTypes";
 import defaultLang from "../i18n/en.json";
 
 export default function TranslationProvider(props: { children: ReactElement }) {
@@ -10,7 +10,7 @@ export default function TranslationProvider(props: { children: ReactElement }) {
   useEffect(() => {
     async function loadLang() {
       const data = (await import(`../i18n/${currentLang}.json`)) as {
-        default: TranslationConfigInterface;
+        default: typeof config;
       };
       changeConfig(data.default);
     }
