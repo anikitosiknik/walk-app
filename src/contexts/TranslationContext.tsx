@@ -1,9 +1,12 @@
 import React from "react";
-import { LANGS } from "../types/TranslationTypes";
+
 import defaultLang from "../i18n/en.json";
+import { languages } from "../types/TranslationTypes";
 
 export const TranslationContext = React.createContext({
   config: defaultLang,
-  currentLang: LANGS.en,
-  changeLang: (lang: LANGS) => {},
+  currentLang: languages.en,
+  setCurrentLang: (lang: languages) => {
+    lang;
+  },
 });
