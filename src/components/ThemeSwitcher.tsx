@@ -1,5 +1,5 @@
 import { Button, ButtonGroup } from "@material-ui/core";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import styled from "styled-components";
 
 import { ThemeContext } from "../contexts/ThemeContext";
@@ -11,28 +11,28 @@ const ThemeSwitcherStyled = styled(ButtonGroup)`
   align-self: end;
 `;
 export default function ThemeSwitcher() {
-  const langConfig = useContext(TranslationContext).config;
+  const { themeSwitcher } = useContext(TranslationContext).config;
+  const { currentTheme, setCurrentTheme } = useContext(ThemeContext);
+
+  const setLightTheme = useCallback(() => setCurrentTheme(themes.light), []);
+  const setDarkTheme = useCallback(() => setCurrentTheme(themes.dark), []);
 
   return (
-    <ThemeContext.Consumer>
-      {({ currentTheme, setCurrentTheme }) => (
-        <ThemeSwitcherStyled variant="contained">
-          <Button
-            onClick={() => setCurrentTheme(themes.light)}
-            color="secondary"
-            disabled={currentTheme === themes.light}
-          >
-            {langConfig.themeSwitcher.light}
-          </Button>
-          <Button
-            onClick={() => setCurrentTheme(themes.dark)}
-            color="secondary"
-            disabled={currentTheme === themes.dark}
-          >
-            {langConfig.themeSwitcher.dark}
-          </Button>
-        </ThemeSwitcherStyled>
-      )}
-    </ThemeContext.Consumer>
+    <ThemeSwitcherStyled variant="contained">
+      <Button
+        onClick={setLightTheme}
+        color="secondary"
+        disabled={currentTheme === themes.light}
+      >
+        {themeSwitcher.light}
+      </Button>
+      <Button
+        onClick={setDarkTheme}
+        color="secondary"
+        disabled={currentTheme === themes.dark}
+      >
+        {themeSwitcher.dark}
+      </Button>
+    </ThemeSwitcherStyled>
   );
 }
