@@ -1,9 +1,18 @@
 {
   "loginForm": {
-    "login": "Логин"
+    "login": "Имя пользователя",
+    "password": "Пароль",
+    "register": "Регистрация",
+    "logIn": "Войти"
   },
   "themeSwitcher": {
     "dark": "темная",
     "light": "светлая"
+  },
+  "findUs": {
+    "label": "Ищите нас в:",
+    "twitter": "twitter",
+    "instagram": "instagram",
+    "facebook": "facebook"
   }
 }

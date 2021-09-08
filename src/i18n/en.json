@@ -1,9 +1,18 @@
 {
   "loginForm": {
-    "login": "Login"
+    "login": "Login",
+    "password": "Password",
+    "register": "Register",
+    "logIn": "Log In"
   },
   "themeSwitcher": {
     "dark": "dark",
     "light": "light"
+  },
+  "findUs": {
+    "label": "Finds us on:",
+    "twitter": "twitter",
+    "instagram": "instagram",
+    "facebook": "facebook"
   }
 }
