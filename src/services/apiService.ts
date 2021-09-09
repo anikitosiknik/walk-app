@@ -1,8 +1,6 @@
 import { checkError, handleError } from "../utils/errorHelper";
 import localStoreService from "./localStoreService";
 
-const apiRoute = "https://reqres.in/api";
-
 export function anonymPostRequest(route: string, body: unknown) {
   return request(route, {
     method: "POST",
@@ -32,7 +30,7 @@ export function anonymGetRequest(route: string) {
 }
 
 function request(route: string, config: RequestInit) {
-  return fetch(`${apiRoute}${route}`, config)
+  return fetch(`${process.env.REACT_APP_API_ROUTE}${route}`, config)
     .then(checkError)
     .then((response) => response.json())
     .catch(handleError);
@@ -41,7 +39,7 @@ function request(route: string, config: RequestInit) {
 function authorizedRequest(route: string, config: RequestInit) {
   const authToken = localStoreService.getAuthToken();
   if (!authToken) {
-    throw console.warn("no token");
+    throw new Error("no token");
   }
   config.headers = {
     ...config?.headers,

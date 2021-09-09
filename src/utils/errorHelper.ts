@@ -1,10 +1,10 @@
 export function checkError(response: Response) {
   if (!response.ok) {
-    throw Error(response.statusText);
+    throw new Error(response.statusText);
   }
   return response;
 }
 
 export function handleError(error: Error) {
-  throw console.warn(error);
+  throw new Error(error.message);
 }
