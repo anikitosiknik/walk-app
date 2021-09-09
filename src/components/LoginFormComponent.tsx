@@ -1,5 +1,6 @@
 import { TextField, Button } from "@material-ui/core";
 import { useCallback, useContext, useState } from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 
 import { TranslationContext } from "../contexts/TranslationContext";
@@ -20,6 +21,7 @@ const FormContainer = styled.form`
 
 export default function LoginFormComponent() {
   const dispatch = useAppDispatch();
+  const history = useHistory();
   const { loginForm } = useContext(TranslationContext).config;
 
   const [userName, setUserName] = useState("");
@@ -47,8 +49,7 @@ export default function LoginFormComponent() {
       });
       const data = await authRequest(token);
       dispatch(loginAction({ email: userName, id: data.id }));
-      setUserName("");
-      setPassword("");
+      history.push("/");
     }
     login();
   }, [userName, password]);
@@ -60,8 +61,7 @@ export default function LoginFormComponent() {
         password: password,
       });
       dispatch(loginAction({ email: userName, id: data.id }));
-      setUserName("");
-      setPassword("");
+      history.push("/");
     }
     register();
   }, [userName, password]);

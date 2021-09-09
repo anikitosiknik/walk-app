@@ -1,6 +1,6 @@
 import { Provider } from "react-redux";
 
-import LoginPageComponent from "./components/LoginPageComponent";
+import RouterComponent from "./components/RouterComponent";
 import ThemeProviderWrapper from "./components/ThemeProviderWrapper";
 import TranslationProvider from "./components/TranslationProvider";
 import { store } from "./store/store";
@@ -10,7 +10,7 @@ function App() {
     <Provider store={store}>
       <TranslationProvider>
         <ThemeProviderWrapper>
-          <LoginPageComponent />
+          <RouterComponent />
         </ThemeProviderWrapper>
       </TranslationProvider>
     </Provider>
