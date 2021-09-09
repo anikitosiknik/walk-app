@@ -1,5 +1,9 @@
 {
   "loginForm": {
     "login": "Login"
+  },
+  "themeSwitcher": {
+    "dark": "dark",
+    "light": "light"
   }
 }
