@@ -1,6 +1,14 @@
 import localStoreService from "./localStoreService";
 
-export function anonymPostRequest(route: string, body: unknown) {
+export function getRequest(route: string, config?: RequestInit) {
+  return request(route, config || {});
+}
+
+export const authorizedGetRequest = authorizeDecorator(
+  getRequest
+) as typeof getRequest;
+
+export function postRequest(route: string, body: unknown) {
   return request(route, {
     method: "POST",
     headers: {
@@ -10,36 +18,45 @@ export function anonymPostRequest(route: string, body: unknown) {
   });
 }
 
-export function authorizedPostRequest(route: string, body: unknown) {
-  return authorizedRequest(route, {
-    method: "POST",
+export const authorizedPostRequest = authorizeDecorator(
+  postRequest
+) as typeof postRequest;
+
+export const putRequest = authorizeDecorator((route: string, body: unknown) => {
+  return request(route, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
   });
-}
+});
 
-export function authorizedGetRequest(route: string) {
-  return authorizedRequest(route, {});
-}
-
-export function anonymGetRequest(route: string) {
-  return request(route, {});
-}
-
-function request(route: string, config: RequestInit) {
-  return fetch(`${process.env.REACT_APP_API_ROUTE}${route}`, config);
-}
-
-function authorizedRequest(route: string, config: RequestInit) {
-  const authToken = localStoreService.authToken;
-  if (!authToken) {
-    throw new Error("no token");
+export const deleteRequest = authorizeDecorator(
+  (route: string, config?: RequestInit) => {
+    return request(route, {
+      ...config,
+      method: "DELETE",
+    });
   }
-  config.headers = {
-    ...config?.headers,
-    Authorization: `Bearer ${localStoreService.authToken}`,
+);
+
+function request(route: string, config?: RequestInit) {
+  return fetch(`${process.env.REACT_APP_API_ROUTE}${route}`, config || {});
+}
+
+function authorizeDecorator(callback: typeof request): typeof request {
+  return function (route: string, config?: RequestInit) {
+    const authToken = localStoreService.authToken;
+    if (!authToken) {
+      throw new Error("no token");
+    }
+    return callback(route, {
+      ...config,
+      headers: {
+        ...config?.headers,
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
   };
-  return request(route, config);
 }
