@@ -1,4 +1,3 @@
-import { checkError, handleError } from "../utils/errorHelper";
 import localStoreService from "./localStoreService";
 
 export function anonymPostRequest(route: string, body: unknown) {
@@ -30,20 +29,17 @@ export function anonymGetRequest(route: string) {
 }
 
 function request(route: string, config: RequestInit) {
-  return fetch(`${process.env.REACT_APP_API_ROUTE}${route}`, config)
-    .then(checkError)
-    .then((response) => response.json())
-    .catch(handleError);
+  return fetch(`${process.env.REACT_APP_API_ROUTE}${route}`, config);
 }
 
 function authorizedRequest(route: string, config: RequestInit) {
-  const authToken = localStoreService.getAuthToken();
+  const authToken = localStoreService.authToken;
   if (!authToken) {
     throw new Error("no token");
   }
   config.headers = {
     ...config?.headers,
-    Authorization: `Bearer ${localStoreService.getAuthToken()}`,
+    Authorization: `Bearer ${localStoreService.authToken}`,
   };
   return request(route, config);
 }

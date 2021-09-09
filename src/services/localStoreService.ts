@@ -10,12 +10,13 @@ class LocalStoreService {
 
     return LocalStoreService.instance;
   }
-  public getAuthToken() {
+
+  get authToken() {
     return localStorage.getItem("authToken") || "";
   }
 
-  public setAuthToken(token: string) {
-    return localStorage.setItem("authToken", token);
+  set authToken(token: string) {
+    localStorage.setItem("authToken", token);
   }
 }
 
