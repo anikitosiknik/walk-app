@@ -3,7 +3,11 @@
     "login": "Login",
     "password": "Password",
     "register": "Register",
-    "logIn": "Log In"
+    "logIn": "Log In",
+    "emailTip": "Enter a valid email",
+    "emailRequired": "Email is required",
+    "passwordTip": "Password should be of minimum 8 characters length",
+    "passwordRequired": "Password is required"
   },
   "themeSwitcher": {
     "dark": "dark",

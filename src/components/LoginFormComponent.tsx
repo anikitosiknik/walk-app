@@ -1,16 +1,15 @@
 import { TextField, Button } from "@material-ui/core";
-import { useCallback, useContext, useState } from "react";
+import { useFormik } from "formik";
+import { useContext, useMemo } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import * as yup from "yup";
 
 import { TranslationContext } from "../contexts/TranslationContext";
 import { loginAction } from "../reducers/authReducer";
-import {
-  authRequest,
-  loginRequest,
-  registerRequest,
-} from "../services/authService";
+import { authRequest, loginRequest } from "../services/authService";
 import { useAppDispatch } from "../store/hooks";
+import { localVariables } from "../types/localStorageTypes";
 
 const FormContainer = styled.form`
   display: grid;
@@ -24,57 +23,48 @@ export default function LoginFormComponent() {
   const history = useHistory();
   const { loginForm } = useContext(TranslationContext).config;
 
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleUserNameInput = useCallback(
-    (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setUserName(event.target.value);
-    },
-    [userName]
+  const validationSchema = useMemo(
+    () =>
+      yup.object({
+        email: yup
+          .string()
+          .email(loginForm.emailTip)
+          .required(loginForm.emailRequired),
+        password: yup
+          .string()
+          .min(6, loginForm.passwordTip)
+          .required(loginForm.passwordRequired),
+      }),
+    [loginForm]
   );
 
-  const handlePassInput = useCallback(
-    (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setPassword(event.target.value);
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
     },
-    [password]
-  );
-
-  const loginHandler = useCallback(() => {
-    async function login() {
-      const { token } = await loginRequest({
-        email: userName,
-        password: password,
-      });
+    validationSchema: validationSchema,
+    onSubmit: async (credentials) => {
+      const { token } = await loginRequest(credentials);
+      localStorage.setItem(localVariables.authToken, token);
       const data = await authRequest(token);
-      dispatch(loginAction({ email: userName, id: data.id }));
+      dispatch(loginAction({ email: credentials.email, id: data.id }));
       history.push("/");
-    }
-    login();
-  }, [userName, password]);
-
-  const registerHandler = useCallback(() => {
-    async function register() {
-      const data = await registerRequest({
-        email: userName,
-        password: password,
-      });
-      dispatch(loginAction({ email: userName, id: data.id }));
-      history.push("/");
-    }
-    register();
-  }, [userName, password]);
+    },
+  });
 
   return (
-    <FormContainer autoComplete="on">
+    <FormContainer autoComplete="on" onSubmit={formik.handleSubmit}>
       <TextField
         required={true}
         variant="outlined"
         size="small"
         label={loginForm.login}
-        value={userName}
-        onChange={handleUserNameInput}
+        id="email"
+        value={formik.values.email}
+        onChange={formik.handleChange}
+        error={formik.touched.email && Boolean(formik.errors.email)}
+        helperText={formik.touched.email && formik.errors.email}
       ></TextField>
       <TextField
         required={true}
@@ -83,15 +73,16 @@ export default function LoginFormComponent() {
         label={loginForm.password}
         type="password"
         autoComplete="current-password"
-        value={password}
-        onChange={handlePassInput}
+        id="password"
+        value={formik.values.password}
+        onChange={formik.handleChange}
+        error={formik.touched.password && Boolean(formik.errors.password)}
+        helperText={formik.touched.password && formik.errors.password}
       />
-      <Button variant="contained" color="primary" onClick={loginHandler}>
+      <Button variant="contained" color="primary" type="submit">
         {loginForm.logIn}
       </Button>
-      <Button color="primary" onClick={registerHandler}>
-        {loginForm.register}
-      </Button>
+      <Button color="primary">{loginForm.register}</Button>
     </FormContainer>
   );
 }

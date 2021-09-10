@@ -1,19 +1,14 @@
 import {
-  LoginInterface,
+  UserCredentialsInterfce,
   LoginResponseInterface,
   RegisterResponseInterface,
 } from "../types/authTypes";
-import { anonymPostRequest } from "./apiService";
+import { postRequest } from "./apiService";
 
-export async function registerRequest(config: LoginInterface) {
-  return anonymPostRequest(
-    "/register",
-    config
-  ) as Promise<RegisterResponseInterface>;
-}
-
-export async function loginRequest(config: LoginInterface) {
-  return anonymPostRequest("/login", config) as Promise<LoginResponseInterface>;
+export async function loginRequest(config: UserCredentialsInterfce) {
+  return postRequest("/login", config).then((res) =>
+    res.json()
+  ) as Promise<LoginResponseInterface>;
 }
 
 export async function authRequest(token: string) {
