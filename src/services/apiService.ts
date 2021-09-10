@@ -1,4 +1,4 @@
-import localStoreService from "./localStoreService";
+import { localVariables } from "../types/localStorageTypes";
 
 export function getRequest(route: string, config?: RequestInit) {
   return request(route, config || {});
@@ -47,7 +47,7 @@ function request(route: string, config?: RequestInit) {
 
 function authorizeDecorator(callback: typeof request): typeof request {
   return function (route: string, config?: RequestInit) {
-    const authToken = localStoreService.authToken;
+    const authToken = localStorage.getItem(localVariables.authToken);
     if (!authToken) {
       throw new Error("no token");
     }
