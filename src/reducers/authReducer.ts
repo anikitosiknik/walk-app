@@ -4,7 +4,6 @@ import { AuthStateInterace } from "../types/authTypes";
 
 const initialState: AuthStateInterace = {
   email: null,
-  id: null,
 };
 
 export const authSlice = createSlice({

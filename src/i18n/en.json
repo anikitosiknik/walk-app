@@ -7,7 +7,8 @@
     "emailTip": "Enter a valid email",
     "emailRequired": "Email is required",
     "passwordTip": "Password should be of minimum 8 characters length",
-    "passwordRequired": "Password is required"
+    "passwordRequired": "Password is required",
+    "incorrectLoginOrPassword": "Incorrect login or password"
   },
   "themeSwitcher": {
     "dark": "dark",

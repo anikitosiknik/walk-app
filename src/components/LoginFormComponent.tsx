@@ -1,15 +1,12 @@
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, FormHelperText } from "@material-ui/core";
 import { useFormik } from "formik";
-import { useContext, useMemo } from "react";
-import { useHistory } from "react-router";
+import { useCallback, useContext, useMemo, useState, ChangeEvent } from "react";
 import styled from "styled-components";
 import * as yup from "yup";
 
 import { TranslationContext } from "../contexts/TranslationContext";
-import { loginAction } from "../reducers/authReducer";
-import { authRequest, loginRequest } from "../services/authService";
 import { useAppDispatch } from "../store/hooks";
-import { localVariables } from "../types/localStorageTypes";
+import { loginThunk } from "../thunks/authThunks";
 
 const FormContainer = styled.form`
   display: grid;
@@ -20,8 +17,8 @@ const FormContainer = styled.form`
 
 export default function LoginFormComponent() {
   const dispatch = useAppDispatch();
-  const history = useHistory();
   const { loginForm } = useContext(TranslationContext).config;
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const validationSchema = useMemo(
     () =>
@@ -44,17 +41,35 @@ export default function LoginFormComponent() {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (credentials) => {
-      const { token } = await loginRequest(credentials);
-      localStorage.setItem(localVariables.authToken, token);
-      const data = await authRequest(token);
-      dispatch(loginAction({ email: credentials.email, id: data.id }));
-      history.push("/");
+    onSubmit: async (credentials, { resetForm }) => {
+      const isLoginSuccessful = (await dispatch(
+        loginThunk(credentials)
+      )) as unknown as boolean;
+      if (isLoginSuccessful) {
+        return;
+      }
+      setShowErrorMessage(true);
+      resetForm();
     },
   });
 
+  const handleFormInput = useCallback(
+    (event: ChangeEvent) => {
+      formik.handleChange(event);
+      if (showErrorMessage) {
+        setShowErrorMessage(false);
+      }
+    },
+    [showErrorMessage]
+  );
+
   return (
     <FormContainer autoComplete="on" onSubmit={formik.handleSubmit}>
+      {showErrorMessage ? (
+        <FormHelperText error>
+          {loginForm.incorrectLoginOrPassword}
+        </FormHelperText>
+      ) : null}
       <TextField
         required={true}
         variant="outlined"
@@ -62,10 +77,10 @@ export default function LoginFormComponent() {
         label={loginForm.login}
         id="email"
         value={formik.values.email}
-        onChange={formik.handleChange}
+        onChange={handleFormInput}
         error={formik.touched.email && Boolean(formik.errors.email)}
         helperText={formik.touched.email && formik.errors.email}
-      ></TextField>
+      />
       <TextField
         required={true}
         variant="outlined"
@@ -75,7 +90,7 @@ export default function LoginFormComponent() {
         autoComplete="current-password"
         id="password"
         value={formik.values.password}
-        onChange={formik.handleChange}
+        onChange={handleFormInput}
         error={formik.touched.password && Boolean(formik.errors.password)}
         helperText={formik.touched.password && formik.errors.password}
       />

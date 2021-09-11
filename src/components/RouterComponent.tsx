@@ -10,24 +10,25 @@ import LoginPageComponent from "./LoginPageComponent";
 import NavigationBar from "./NavigationBar";
 
 export default function RouterComponent() {
-  const id = useAppSelector((state) => state.user.id);
+  const email = useAppSelector((state) => state.user.email);
 
   return (
     <Router>
       <Switch>
-        <Route exact path="/login">
-          <LoginPageComponent />
-        </Route>
         <Route
-          path="/"
+          exact
+          path="/login"
           render={() => {
-            return id ? (
-              <NavigationBar />
+            return email ? (
+              <Redirect to={{ pathname: "/" }} />
             ) : (
-              <Redirect to={{ pathname: "/login" }} />
+              <LoginPageComponent />
             );
           }}
         ></Route>
+        <Route exact path="/">
+          <NavigationBar />
+        </Route>
       </Switch>
     </Router>
   );

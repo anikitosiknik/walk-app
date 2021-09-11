@@ -7,7 +7,8 @@
     "emailTip": "Введите валидный e-mail",
     "emailRequired": "e-mail обязателен",
     "passwordTip": "Пароль должен содержать минимум 6 символов",
-    "passwordRequired": "Пароль обязателен"
+    "passwordRequired": "Пароль обязателен",
+    "incorrectLoginOrPassword": "Неправильный логин или пароль"
   },
   "themeSwitcher": {
     "dark": "темная",
