@@ -25,7 +25,7 @@ export default function RouterComponent() {
               <LoginPageComponent />
             );
           }}
-        ></Route>
+        />
         <Route exact path="/">
           <NavigationBar />
         </Route>
