@@ -19,5 +19,10 @@
     "twitter": "twitter",
     "instagram": "instagram",
     "facebook": "facebook"
+  },
+  "unauthorizedPage": {
+    "unauthorized": "Unauthorized",
+    "oopsText": "OOPS! Seems like you're trying to reach something without authorization",
+    "goToLogin": "Go to LoginPage"
   }
 }

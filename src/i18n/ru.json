@@ -19,5 +19,10 @@
     "twitter": "twitter",
     "instagram": "instagram",
     "facebook": "facebook"
+  },
+  "unauthorizedPage": {
+    "unauthorized": "Вы не авторизованы",
+    "oopsText": "УПС! Кажется вы пытаетесь получить что-то без авторизации",
+    "goToLogin": "Отправиться на Логин страницу"
   }
 }
