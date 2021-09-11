@@ -24,5 +24,10 @@
     "unauthorized": "Unauthorized",
     "oopsText": "OOPS! Seems like you're trying to reach something without authorization",
     "goToLogin": "Go to LoginPage"
+  },
+  "errorPage": {
+    "errorHeader": "404",
+    "oopsText": "OOPS! Try to go home, maybe thing that you're looking for is there",
+    "goToHome": "Go Home"
   }
 }
