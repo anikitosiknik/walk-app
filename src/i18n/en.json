@@ -29,5 +29,15 @@
     "errorHeader": "404",
     "oopsText": "OOPS! Try to go home, maybe thing that you're looking for is there",
     "goToHome": "Go Home"
+  },
+  "usersPage": {
+    "users": "Users",
+    "id": "id",
+    "firstName": "First name",
+    "lastName": "Last name"
+  },
+  "navigationBar": {
+    "home": "home",
+    "profile": "profile"
   }
 }
