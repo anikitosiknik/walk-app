@@ -8,6 +8,7 @@ import {
 import { useAppSelector } from "../store/hooks";
 import LoginPageComponent from "./LoginPageComponent";
 import NavigationBar from "./NavigationBar";
+import UnauthorizedPageComponent from "./UnauthorizedPageComponent";
 
 export default function RouterComponent() {
   const email = useAppSelector((state) => state.user.email);
@@ -26,8 +27,19 @@ export default function RouterComponent() {
             );
           }}
         />
-        <Route exact path="/">
-          <NavigationBar />
+        <Route
+          exact
+          path="/"
+          render={() => {
+            return email ? (
+              <NavigationBar />
+            ) : (
+              <Redirect to={{ pathname: "/unauthorized" }} />
+            );
+          }}
+        />
+        <Route exact path="/unauthorized">
+          <UnauthorizedPageComponent />
         </Route>
       </Switch>
     </Router>
