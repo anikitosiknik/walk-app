@@ -1,9 +1,10 @@
 import { AppBar, Tab, Tabs, Toolbar } from "@material-ui/core";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { TranslationContext } from "../contexts/TranslationContext";
+import { useAppSelector } from "../store/hooks";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const NavigationToolBar = styled(Toolbar)`
@@ -17,9 +18,19 @@ const NavigationTabs = styled(Tabs)`
 export default function NavigationBar() {
   const [tab, setTab] = useState(0);
   const { navigationBar } = useContext(TranslationContext).config;
+  const id = useAppSelector((state) => state.users.currentUserId);
+
   const changeTabsHandler = useCallback((event, value: number) => {
     setTab(value);
   }, []);
+
+  useEffect(() => {
+    if (id) {
+      setTab(1);
+    } else {
+      setTab(0);
+    }
+  }, [id]);
 
   return (
     <AppBar position="static">

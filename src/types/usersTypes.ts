@@ -16,9 +16,15 @@ export interface User {
 
 export interface UsersStateInterface {
   users: User[];
+  currentUserId?: number | null;
   pageInfo: {
     current: number;
     pageSize: number;
     numberOfPages: number;
   };
+}
+
+export interface RouteInterface {
+  date: Date;
+  polyline: [number, number][];
 }
