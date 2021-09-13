@@ -3,7 +3,6 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 
 import { TranslationContext } from "../contexts/TranslationContext";
-import NavigationBar from "./NavigationBar";
 import InfoComponent from "./RedirectComponent";
 
 const ErrorPageContainer = styled.div`
@@ -22,7 +21,6 @@ export default function ErrorPageComponent() {
 
   return (
     <ErrorPageContainer>
-      <NavigationBar />
       <InfoComponent
         header={errorPage.errorHeader}
         hint={errorPage.oopsText}
