@@ -1,9 +1,23 @@
 {
   "loginForm": {
-    "login": "Логин"
+    "login": "Имя пользователя",
+    "password": "Пароль",
+    "register": "Регистрация",
+    "logIn": "Войти",
+    "emailTip": "Введите валидный e-mail",
+    "emailRequired": "e-mail обязателен",
+    "passwordTip": "Пароль должен содержать минимум 6 символов",
+    "passwordRequired": "Пароль обязателен",
+    "incorrectLoginOrPassword": "Неправильный логин или пароль"
   },
   "themeSwitcher": {
     "dark": "темная",
     "light": "светлая"
+  },
+  "findUs": {
+    "label": "Ищите нас в:",
+    "twitter": "twitter",
+    "instagram": "instagram",
+    "facebook": "facebook"
   }
 }

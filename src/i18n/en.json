@@ -1,9 +1,23 @@
 {
   "loginForm": {
-    "login": "Login"
+    "login": "Login",
+    "password": "Password",
+    "register": "Register",
+    "logIn": "Log In",
+    "emailTip": "Enter a valid email",
+    "emailRequired": "Email is required",
+    "passwordTip": "Password should be of minimum 8 characters length",
+    "passwordRequired": "Password is required",
+    "incorrectLoginOrPassword": "Incorrect login or password"
   },
   "themeSwitcher": {
     "dark": "dark",
     "light": "light"
+  },
+  "findUs": {
+    "label": "Finds us on:",
+    "twitter": "twitter",
+    "instagram": "instagram",
+    "facebook": "facebook"
   }
 }

@@ -1,6 +1,6 @@
 import { Provider } from "react-redux";
 
-import NavigationBar from "./components/NavigationBar";
+import RouterComponent from "./components/RouterComponent";
 import ThemeProviderWrapper from "./components/ThemeProviderWrapper";
 import TranslationProvider from "./components/TranslationProvider";
 import { store } from "./store/store";
@@ -10,7 +10,7 @@ function App() {
     <Provider store={store}>
       <TranslationProvider>
         <ThemeProviderWrapper>
-          <NavigationBar />
+          <RouterComponent />
         </ThemeProviderWrapper>
       </TranslationProvider>
     </Provider>
