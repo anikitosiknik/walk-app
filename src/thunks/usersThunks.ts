@@ -1,4 +1,4 @@
-import { setUsersAction } from "../reducers/usersReducer";
+import { setCurrentUserAction, setUsersAction } from "../reducers/usersReducer";
 import { getUsersRequest } from "../services/usersService";
 import { AppThunkAction } from "../types/storeTypes";
 
@@ -20,5 +20,11 @@ export const getUsersThunk = (page: number): AppThunkAction => {
         },
       })
     );
+  };
+};
+
+export const setCurrentUserThunk = (id: number): AppThunkAction => {
+  return function (dispatch) {
+    dispatch(setCurrentUserAction(id));
   };
 };

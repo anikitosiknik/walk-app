@@ -9,6 +9,7 @@ import { useAppSelector } from "../store/hooks";
 import ErrorPageComponent from "./ErrorPageComponent";
 import LoginPageComponent from "./LoginPageComponent";
 import NavigationBar from "./NavigationBar";
+import ProfilePageComponent from "./ProfilePageComponent";
 import UnauthorizedPageComponent from "./UnauthorizedPageComponent";
 import UsersPageComponent from "./UsersPageComponent";
 
@@ -31,6 +32,13 @@ export default function RouterComponent() {
         </Route>
         <Route exact path="/unauthorized">
           <UnauthorizedPageComponent />
+        </Route>
+        <Route exact path="/profile">
+          {email ? (
+            <ProfilePageComponent />
+          ) : (
+            <Redirect to={{ pathname: "/unauthorized" }} />
+          )}
         </Route>
         <Route path="*">
           {email ? (

@@ -39,5 +39,13 @@
   "navigationBar": {
     "home": "home",
     "profile": "profile"
+  },
+  "userDataComponent": {
+    "name": "Name:",
+    "lastName": "Last name:",
+    "email": "email:"
+  },
+  "mapComponent": {
+    "route": "Route"
   }
 }

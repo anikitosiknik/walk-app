@@ -1,12 +1,13 @@
 import { Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
 import { useCallback, useContext, useEffect, useMemo } from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 
 import { TranslationContext } from "../contexts/TranslationContext";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { getUsersThunk } from "../thunks/usersThunks";
+import { getUsersThunk, setCurrentUserThunk } from "../thunks/usersThunks";
 
 const UsersPageContainer = styled.div`
   display: flex;
@@ -24,6 +25,7 @@ export default function UsersPageComponent() {
   const dispatch = useAppDispatch();
   const { users, pageInfo } = useAppSelector((state) => state.users);
   const { usersPage } = useContext(TranslationContext).config;
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getUsersThunk(1));
@@ -53,10 +55,20 @@ export default function UsersPageComponent() {
     [users]
   );
 
+  const rowClickHandler = useCallback(({ id }: GridRowParams) => {
+    dispatch(setCurrentUserThunk(Number(id)));
+    history.push("/profile");
+  }, []);
+
   return (
     <UsersPageContainer>
       <Typography variant="h2">{usersPage.users}</Typography>
-      <DataGrid rows={users} columns={columnConfig} hideFooter />
+      <DataGrid
+        rows={users}
+        columns={columnConfig}
+        hideFooter
+        onRowClick={rowClickHandler}
+      />
       <GridPagination
         page={pageInfo.current}
         count={pageInfo.numberOfPages || 1}
